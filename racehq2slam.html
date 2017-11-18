@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>RACEHQ2SLAM</title>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+  </head>
+  <body>
+    <script>
+
+      function namefile(){
+      xname = inputfile.value;
+      fname = xname.substr(xname.lastIndexOf('\\') + 1).split('.')[0];
+      outputfile.value = fname + '.xls';
+
+      };
+      var toggle = 0;
+      function emailclick(yesno){
+          if (yesno.value == "1" && toggle == 0) {
+            $("#demail").append("<div id='ebox'><p><label>Enter email address</label></p> <input id='eaddress' type='email' name='eaddress'></input></div>");
+          toggle = 1;
+          } else if (yesno.value == "0") {
+            $("#ebox").remove();
+            toggle = 0;
+          };
+      };
+
+	 </script>
+
+    <div class='container-fluid'>
+      <div class='row'>
+	<div class='col-md-4 col-sm-6'>
+	  <h3 class='text-center'>Convert RaceHQ results to SLAM compatible format</h3>
+	</div>
+      </div>
+<div class=“container”>
+     <form id="file_selection" ACTION="{{ url_for('racehq2slam_pro') }}" METHOD="POST" enctype=multipart/form-data>
+	  <div class='d-inline bg-warning'>
+	    <h3 class='text-left'><em>Input</em></h3>
+	    <p><label>.thq filename</label></p>
+	    <input id='inputfile' name='file' type='file' accept='.csv, .thq' onChange='namefile()'></input>
+	  </div>
+	  <div class='d-inline bg-warning'>
+	    <h3 class='text-left'><em>Output</em></h3>
+	    <p><label>.xls filename</label></p>
+	    <input id='outputfile' type='textbox' name='outputfile'></input>
+	  </div>
+
+	  <div id="demail" class='d-inline bg-warning'>
+	    <h3 class='text-left'><em>Results by email too?</em></h3>
+	    <p>
+	    <input type='radio' name='toemail' onclick="emailclick(this);" value="1">Yes</input>
+	    <input type='radio' name="toemail" onclick="emailclick(this);" value="0" checked>No</input>
+	    </p><br>
+
+	  </div>
+      <br>
+
+	    <input class='btn btn-primary' type='Submit' name='submit'></input>
+
+	</form>
+        </div>
+	</div>
+<!--
+var address_bar = $("<div id='ebox'><p><label>Enter email address</label></p> <input id='eaddress' type='email' name='eaddress'></input></div>");
+-->
+
+  </body>
+</html>
